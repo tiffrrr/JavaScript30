@@ -17,6 +17,7 @@
 
 ## 其它知識點
 
+- 選取dom(querySelector/getElementById/...)
 - 使用js改變dom css
 - css transform
 - css transform rotate
