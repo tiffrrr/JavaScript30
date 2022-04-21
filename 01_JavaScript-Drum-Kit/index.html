@@ -60,12 +60,20 @@
 <script>
   function removeTransition(e){
     // 有很多屬性改變，所以會執行很多次，只取一次就好
-    // console.log(e)
     if(e.propertyName !== 'transform') return;
     this.classList.remove('playing');
+    console.log('this',this)
   }
 
+  // const removeTransition = (e) => {
+  //   // if(e.propertyName !== 'transform') return;
+  //   // this.classList.remove('playing');
+  //   console.log('this',this)
+  // }
+
+
   function playSound(event){
+    console.log(event)
     const audio = document.querySelector(`audio[data-key="${event.keyCode}"`);
     if(!audio) return;
     // 連續點擊時才能立即從頭播放，不然音源沒播完前就不會再次播音樂。

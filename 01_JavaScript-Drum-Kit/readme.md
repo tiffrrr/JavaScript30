@@ -32,7 +32,7 @@
 
 
 - 綁定事件：addEventListener（keydown/transitionend)
-- this（不要亂用） 
+- this [淺談 JavaScript 頭號難題 this：絕對不完整，但保證好懂](https://blog.techbridge.cc/2019/02/23/javascript-this/)
 - arrow function 
 - const/let/var 的差別 
 
