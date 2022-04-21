@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city or a state</li>
+      <li></li>
+    </ul>
+  </form>
+<script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+    let cities = [];
+    fetch(endpoint)
+        .then(blob => blob.json())
+        .then(json =>  {cities.push(...json);}
+        )
+
+    const input = document.querySelector('.search');
+    const suggestions = document.querySelector('.suggestions');
+    
+    // 轉換金額為有逗號
+    function numberWithCommas(x){
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function showSuggestions(e){
+        let html='';
+        cities.forEach(element => {
+            const value = e.target.value;
+            let cityStates = `${element.city}, ${element.state}`;
+            const regex = new RegExp(value, 'gi');
+            if(cityStates.match(regex)){
+              let cityStatesWithMark = cityStates.replace(regex,`<mark>${value}</mark>`);
+              html+=`<li>
+                  <span class="name">${cityStatesWithMark}</span>
+                  <span class="population">${numberWithCommas(element.population)}</span>
+              </li>`
+            }
+        })
+        suggestions.innerHTML=html
+    }
+    
+    input.addEventListener('input',showSuggestions)
+    input.addEventListener('blur',function(e){
+      if(e.target.value == ''){
+          suggestions.innerHTML=` <li>Filter for a city or a state</li><li></li>`
+      }
+    })
+
+
+    // return `
+//       <li>
+//         <span class="name">${cityName}, ${stateName}</span>
+//         <span class="population">${numberWithCommas(place.population)}</span>
+//       </li>
+//     `;
+//   }).join('');
+//   suggestions.innerHTML = html;
+</script>
+</body>
+</html>
