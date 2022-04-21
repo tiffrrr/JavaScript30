@@ -9,15 +9,7 @@
 
 
 ## 重點知識點
-
-- audio 
-    [Mozilla](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/audio)
-    ```
-    <audio src="sounds/xxx.wav"></audio>
-
-    audio.play();
-    ```
-
+- 綁定事件：addEventListener（keydown/transitionend)
 
 - KeyboardEvent  
 鍵盤每個按鍵按下去會有對應的號碼，可以判斷按了什麼鍵  
@@ -30,18 +22,26 @@
     })
     ```
 
+- audio 
+    [Mozilla](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/audio)
+    ```
+    <audio src="sounds/xxx.wav"></audio>
+     audio.play();
+    ```
 
-- 綁定事件：addEventListener（keydown/transitionend)
+
+
 - this [淺談 JavaScript 頭號難題 this：絕對不完整，但保證好懂](https://blog.techbridge.cc/2019/02/23/javascript-this/)
 - arrow function 
 - const/let/var 的差別 
+- 選取dom(querySelector/getElementById/...)
+- 使用js新增/刪除 class
+
 
 
 <br />  
 
 ## 其它知識點
-- 選取dom(querySelector/getElementById/...)
-- 新增/刪除 class
 - array.forEach
 - 事件的：event,e.target
 - ``與${}
