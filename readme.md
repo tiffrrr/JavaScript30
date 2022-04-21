@@ -1,0 +1,3 @@
+- 網站：https://javascript30.com/  
+- vedio: https://courses.wesbos.com/account/access/624e97fe0c9453bc977a228c/view/194130346  
+- 參考筆記：https://guahsu.io/categories/JavaScript30/  

@@ -19,6 +19,7 @@
                 <th>No.</th>
                 <th>主題</th>
                 <th>DEMO</th>
+                <th>筆記</th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +37,12 @@
             var tbodyContent = ' ';
             for(var i in indexObj){
                 var index = Number(i)+1
-                tbodyContent+=`<tr><td>${index.toString().padStart(2,0)}</td><td>${indexObj[i].name}</td><td><a href='${indexObj[i].link}'>DEMO</a></td></tr>`
+                tbodyContent+=`<tr>
+                    <td>${index.toString().padStart(2,0)}</td>
+                    <td>${indexObj[i].name}</td>
+                    <td><a href='${indexObj[i].link}'>DEMO</a></td>
+                    <td><a href='${indexObj[i].readme}'>筆記</a></td>
+                    </tr>`
             }
             tbody.innerHTML=tbodyContent
         }

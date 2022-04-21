@@ -6,7 +6,11 @@ fs.readdirSync('./').forEach(file => {
         // 首次變更資料夾名稱
         // var newfileName = file.replace(' - ','_').replace(/, /g,'-').replace(/ /g,'-')
         // local
-        arr.push({"name":file.slice(3),"link":"/"+file})
+        arr.push({
+            "name":file.slice(3),
+            "link":"/"+file,
+            "readme":"https://github.com/tiffrrr/JavaScript30/blob/master/"+file+"/readme.md"
+        })
         // publish
         // arr.push({"name":file.slice(3),"link":"https://tiffrrr.github.io/JavaScript30/"+file})
     }
