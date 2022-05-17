@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 Canvas</title>
+</head>
+
+<body>
+    <canvas id="draw" width="800" height="800"></canvas>
+    <script>
+        // 找到canvas
+        const canvas = document.querySelector('#draw');
+        // 畫布
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+
+        // color
+        ctx.strokeStyle = '#badass';
+        ctx.lineCap = 'round';
+        ctx.linkJoin = 'round';
+        ctx.lineWidth = 1;
+
+        let isDrawing = false;
+        let beginX;
+        let beginY;
+        let hue = 0;
+        let isLineWidthLarger = true;
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.strokeStyle = `hsl(${hue},100%,50%)`;
+
+
+            ctx.beginPath();
+            ctx.moveTo(beginX, beginY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            beginX = e.offsetX;
+            beginY = e.offsetY;
+            hue++;
+            if (hue > 360) {
+                hue = 0;
+            }
+            if (ctx.lineWidth >= 70 || ctx.lineWidth <= 1) {
+                isLineWidthLarger = !isLineWidthLarger;
+            }
+
+            if (isLineWidthLarger) {
+                ctx.lineWidth++;
+            } else {
+                ctx.lineWidth--;
+            }
+        }
+        canvas.addEventListener('mousedown', function (e) {
+            isDrawing = true;
+            beginX = e.offsetX;
+            beginY = e.offsetY
+        })
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', function () {
+            isDrawing = false;
+        })
+        canvas.addEventListener('mouseout', function () {
+            isDrawing = false;
+        })
+    </script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+    </style>
+
+</body>
+
+</html>
