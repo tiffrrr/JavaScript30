@@ -12,16 +12,11 @@
 - fetch(其它取資料的方法）
 - promise
 - json
-- 解構賦值（array怎麼相等？)
+- 展開運算子
     ```
      const data = [1,2,3];
      const cities = [];
      cities.push(...data)?
-
-     let cities = [];?
-     cities = data?
-     cities=[...data]?
-     
     ```
 - String操作
     ```
