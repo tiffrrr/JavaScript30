@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Key Detection</title>
+    <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+
+<body>
+    <h1>Just press your keyboard</h1>
+    <p>if you type certain sequence of keys ,it will show alert.(KONAMI CODE)</p>
+    <script>
+        const secretCode = 'morning';
+        const pressArr = [];
+        const secretCodeLength = secretCode.length;
+        console.log(secretCodeLength)
+        window.addEventListener('keyup', function (e) {
+            if (pressArr.length == secretCodeLength) {
+                pressArr.shift();
+            }
+            pressArr.push(e.key)
+            // console.log(pressArr)
+            // console.log(pressArr.join(''))
+            if (pressArr.join('') == secretCode) {
+                alert(secretCode)
+            }
+        })
+    </script>
+</body>
+
+</html>
