@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Reference VS Copy</title>
+</head>
+
+<body>
+
+    <script>
+        // start with strings, numbers and booleans
+        let num = 100;
+        let num2 = num;
+        console.log(num, num2) // 100,100
+        num = 200;
+        console.log(num, num2) // 200 100
+
+
+        // Let's say we have an array
+        const team1 = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+        // and we want to make a copy of it.
+        const team2 = team1;
+        console.log('let team2 = team1', team1, team2)
+        // You might think we can just do something like this:
+        // however what happens when we update that array?
+        team2[3] = 'Lux'
+        console.log('team1 also changed when we update team2', team1, team2)
+        // now here is the problem! we have edited the original array too!
+        // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+
+
+        // So, how do we fix this? We take a copy instead!
+        const teamA = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+        const teamB = teamA.slice();  // shallow copy
+        const teamC = [].concat(teamA); // shallow copy
+        const teamD = [...teamA]; // shallow copy
+        // now when we update it, the original one isn't changed
+        teamB[0] = 'B';
+        teamC[0] = 'C';
+        teamD[0] = 'D';
+        console.log(teamA, teamB, teamC, teamD);
+
+        // deep copy
+        const arr = [[0, 0], [100, 100], [200, 200]];
+        const arr1 = Array.from(arr);
+        const arr1 = Object.assign([], arr);
+        arr1[0] = [1, 0];
+        console.log(arr, arr1)
+
+        // with Objects
+        const person = {
+            name: 'person',
+            age: 80,
+            hobby: { hobby1: 'person hobby' }
+        };
+
+        // how do we take a copy instead?
+        // shallow -  this is only 1 level deep - both for Arrays and Objects. 
+        const user = Object.assign({}, person, { name: 'user' }) //shallow copy
+        const user2 = { ...person }; //shallow copy
+        user2.name = 'user2'
+        // console.log(person, user, user2)
+        // user.hobby.hobby1 = 'user hobby';
+        // user2.hobby.hobby1 = 'user2 hobby';
+        // console.log(person, user, user2) // person/user/user2 all updated
+
+
+
+        // lodash has a cloneDeep method, but you should think twice before using it.
+        const user3 = JSON.parse(JSON.stringify(person)) //deep copy
+        user3.name = 'user3'
+        user3.hobby.hobby1 = 'user3 hobby';
+        console.log(person, user, user2, user3)
+
+
+
+
+    </script>
+
+</body>
+
+</html>
