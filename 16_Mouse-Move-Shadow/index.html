@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mouse Shadow</title>
+</head>
+
+<body>
+
+    <div class="hero">
+        <h1 contenteditable>🔥WOAH!</h1>
+    </div>
+
+    <style>
+        html {
+            color: black;
+            font-family: sans-serif;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .hero {
+            /* min-height: 100vh; */
+            width: 50vw;
+            margin: auto;
+            margin-top: 100px;
+            border: 1px solid cornflowerblue;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        h1 {
+            text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+            font-size: 100px;
+            /* outline: 1px solid black; */
+            color: #E7F2F8;
+        }
+
+        h1:focus {
+            outline: none;
+        }
+    </style>
+
+    <script>
+        const title = document.querySelector('h1');
+        let gapX = 0;
+        let gapY = 0;
+        let centerX = 0;
+        let centerY = 0;
+
+        // get center of words
+        function getCenter() {
+            centerX = title.offsetLeft + 0.5 * title.offsetWidth;
+            centerY = title.offsetTop + 0.5 * title.offsetHeight;
+        }
+        getCenter();
+        window.addEventListener('resize', getCenter);
+
+        // edit and store the words you want
+        title.innerHTML = localStorage.getItem('title') || '🔥WOAH';
+        title.addEventListener('input', function () {
+            localStorage.setItem('title', title.innerHTML);
+            getCenter();
+        })
+
+        document.querySelector('.hero').addEventListener('mousemove', function (e) {
+            gapX = parseInt(e.pageX - centerX);
+            gapY = parseInt(e.pageY - centerY);
+            title.style.textShadow = `
+            ${(-1) * gapY}px ${(-1) * gapX}px 0 #ffa384 , 
+            ${-1 * gapX}px ${-1 * gapY}px 0 #74BDCB , 
+            ${gapY}px ${gapX}px 0 #EFE7BC, 
+            ${gapX}px ${gapY}px 0 #635B6C`;
+        })
+
+
+    </script>
+</body>
+
+</html>
