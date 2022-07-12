@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ball {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: antiquewhite;
+            box-shadow: inset -25px -15px 40px rgba(0, 0, 0, .3);
+            background-image: linear-gradient(-45deg, rgba(255, 255, 220, .3) 0%, transparent 100%);
+            position: absolute;
+            left: 75px;
+            top: 75px;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ball"></div>
+    <script>
+        const ball = document.querySelector('.ball');
+        let isMouseDown = false;
+        // use mouse event
+        ball.addEventListener('mousedown', function () {
+            console.log('mousedown');
+            isMouseDown = true;
+        })
+        document.addEventListener('mousemove', function (e) {
+            if (isMouseDown) {
+                console.log('mousemove', e.pageX, e.pageY);
+                ball.style.left = e.pageX + 'px';
+                ball.style.top = e.pageY + 'px';
+            }
+        })
+        ball.addEventListener('mouseup', function () {
+            console.log('mouseup');
+            isMouseDown = false;
+        })
+        ball.addEventListener('mouseout', function () {
+            console.log('mouseout');
+            isMouseDown = false;
+        })
+        // use drag api
+    </script>
+</body>
+
+</html>
