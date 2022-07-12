@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text">文字文字</div>
+    <button class="start">開始倒數</button>
+    <button class="reset">重設倒數</button>
+    <script>
+        const text = document.querySelector('.text');
+        const startBtn = document.querySelector('.start');
+        const resetBtn = document.querySelector('.reset');
+        let timer;
+        // 避免重複設timer,需要有一個變數判斷是否timer正在進行?
+        let isTimerWork = false;
+        startBtn.addEventListener('click', function () {
+            if (isTimerWork == false) {
+                let second = 5;
+                text.innerHTML = '倒數' + second;
+                isTimerWork = true
+                // setInterval會回傳一個timerID，會是數字，來判斷是哪個setInterval
+                timer = setInterval(() => {
+                    second -= 1;
+                    text.innerHTML = '倒數' + second;
+                    if (second <= 0) {
+                        // clear以後，timer(timerID)並不會被銷毀。只是讓timer不再進行。
+                        clearInterval(timer);
+                        text.innerHTML = '倒數結束';
+                        isTimerWork = false;
+                    }
+                }, 1000);
+            }
+        })
+
+
+        // timer未結束時就停止，重設
+        resetBtn.addEventListener('click', function () {
+            clearInterval(timer);
+            console.log('clear timer', timer)
+            isTimerWork = false;
+        })
+    </script>
+</body>
+
+</html>
