@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Speech Detection</title>
+</head>
+
+<body>
+    <button class="startBtn">click to start the speech recognition service</button>
+    <button class="stopBtn">click to stop</button>
+
+    <div class="words" contenteditable>
+    </div>
+
+    <script>
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        // 調整語系
+        // recognition.lang = 'en-US';
+
+        // Controls whether interim results should be returned (true) or not (false.) Interim results are results that are not yet final
+        // false:會等停止說話後再顯示文字，true:同步，邊說邊顯示文字?
+        recognition.interimResults = true;
+
+        // 用來判斷是否停止偵測。
+        let isDetectionStop = false;
+        let p = document.createElement('p');
+        const words = document.querySelector('.words');
+        words.appendChild(p);
+
+
+        // 監聽事件：正在言語辨識時
+        recognition.addEventListener('result', function (e) {
+            // e = SpeechRecognitionEvent
+            // e.results 是一個很複雜的類array 的 list(not array)，裡面很多資料，開console.log看他的結構，轉化成plain text
+            const transcript = Array.from(e.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('')
+            console.log(transcript)
+            p.innerHTML = transcript;
+
+            // 當前的內容是否最後結果
+            if (e.results[0].isFinal) {
+                p = document.createElement('p');
+                const words = document.querySelector('.words');
+                words.appendChild(p);
+            }
+        })
+        // 前面監聽result事件，只要講話中斷了，就不會再偵測語音。
+        // 所以需要監聽end事件，講話中斷的時候再重新開始偵測語音。
+        recognition.addEventListener('end', () => {
+            if (!isDetectionStop) {
+                recognition.start();
+            }
+        })
+        document.querySelector('.startBtn').addEventListener('click', () => {
+            // 開始偵測語音，瀏覽器會要求麥克風權限
+            recognition.start();
+            isDetectionStop = false;
+        })
+        // 按停止鍵，停止偵測語音。
+        document.querySelector('.stopBtn').addEventListener('click', () => {
+            isDetectionStop = true;
+            recognition.stop();
+        })
+
+    </script>
+
+
+    <style>
+        html {
+            font-size: 10px;
+        }
+
+        body {
+            background: #ffc600;
+            font-family: 'helvetica neue';
+            font-weight: 200;
+            font-size: 20px;
+        }
+
+        .words {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem 1rem 5rem;
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+            background-size: 100% 3rem;
+            position: relative;
+            line-height: 3rem;
+        }
+
+        p {
+            margin: 0 0 3rem;
+        }
+
+        .words:before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            top: 0;
+            left: 30px;
+            bottom: 0;
+            border: 1px solid;
+            border-color: transparent #efe4e4;
+        }
+    </style>
+
+</body>
+
+</html>
