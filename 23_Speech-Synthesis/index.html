@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Speech Synthesis</title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="voiceinator">
+
+        <h1>The Voiceinator 5000</h1>
+
+        <select name="voice" id="voices">
+            <option value="">Select A Voice</option>
+        </select>
+
+        <label for="rate">Rate:</label>
+        <input name="rate" type="range" min="0" max="2" value="1" step="0.1">
+
+        <label for="pitch">Pitch:</label>
+
+        <input name="pitch" type="range" min="0" max="2" step="0.1">
+        <textarea name="text">Hello! Default Text</textarea>
+        <button id="stop">Stop!</button>
+        <button id="speak">Speak</button>
+
+    </div>
+
+    <script>
+        const msg = new SpeechSynthesisUtterance();
+        let voices = [];
+        const voicesDropdown = document.querySelector('[name="voice"]');
+        const options = document.querySelectorAll('[type="range"], [name="text"]');
+        const speakButton = document.querySelector('#speak');
+        const stopButton = document.querySelector('#stop');
+
+        function populateVoices() {
+            console.log('voiceschanged')
+            // 用 synth.getVoices() 取得支援的語音列表
+            // 要注意網頁開啟後首次執行 window.speechSynthesis 後才會把語音功能載入
+            // 大概要花幾秒鐘的時間才能完全載入,再來才能正確取得語音列表
+            // 所以要想辦法延遲 synth.getVoices(); 的執行時間
+            // 或是使用voiceschanged事件偵測,這個事件在載入過程會被觸發多次,很難用,他是偵測changed不是偵測完全載入完成.
+            voices = this.getVoices();
+            voicesDropdown.innerHTML = voices
+                .filter(voice => voice.lang.includes('en') || voice.lang.includes('zh'))
+                .map(voice => `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`)
+                .join('');
+        }
+
+        // 中止目前的講話，並根據傳入參數判斷是否開始講話
+        function toggle(startOver = true) {
+            speechSynthesis.cancel();
+            if (startOver) {
+                speechSynthesis.speak(msg);
+            }
+        }
+
+        // 從下拉選單選擇語言後，設定發音語言
+        function setVoice() {
+            msg.voice = voices.find(voice => voice.name === this.value);
+            toggle();
+        }
+
+        function setOption() {
+            console.log(this.name, this.value);
+            msg[this.name] = this.value;
+            toggle();
+        }
+
+        msg.text = document.querySelector('[name="text"]').value;
+
+        // 這個事件在載入過程會被觸發多次,很難用,他是偵測changed不是偵測完全載入完成,
+        speechSynthesis.addEventListener('voiceschanged', populateVoices);
+
+        voicesDropdown.addEventListener('change', setVoice);
+        options.forEach(option => option.addEventListener('change', setOption));
+        speakButton.addEventListener('click', toggle);
+        stopButton.addEventListener('click', () => toggle(false));
+    </script>
+
+
+</body>
+
+</html>
