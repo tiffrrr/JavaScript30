@@ -53,6 +53,8 @@ function strip(bandName) {
 }
 
 const sortedBands = bands.sort((a, b) => strip(a) > strip(b) ? 1 : -1);
+// a>b 回傳1    sort a after b     => b  a
+// a<b 回傳-1   sort a before b    => a  b
 
 document.querySelector('#bands').innerHTML =
   sortedBands
