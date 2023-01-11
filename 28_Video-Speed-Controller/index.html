@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Speed Scrubber</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
+    <div class="speed">
+      <div class="speed-bar">1×</div>
+    </div>
+  </div>
+
+<script>
+  const speed = document.querySelector('.speed');
+  const bar = speed.querySelector('.speed-bar');
+  const video = document.querySelector('.flex');
+
+  function handleMove(e) {
+        const y = e.pageY - this.offsetTop; 
+        const percent = y / this.offsetHeight; //換算成百分比，目前滑鼠的位置在bar的幾趴
+        //高度隨著滑鼠滑動而改變
+        const height = Math.round(percent * 100) + '%'; 
+        bar.style.height = height; 
+        bar.textContent = playbackRate.toFixed(2) + '×'; //改變html內的數字
+        //設定video的播放速度
+        const min = 0.4;
+        const max = 4;
+        const playbackRate = percent * (max - min) + min;
+        video.playbackRate = playbackRate;
+    }
+
+  speed.addEventListener('mousemove', handleMove);
+
+</script>
+</body>
+</html>
